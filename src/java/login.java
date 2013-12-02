@@ -39,11 +39,11 @@ public class login extends HttpServlet {
             out.println("<title>Please wait...</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet login at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Processing..</h1>");
 
             //read FORM data
-            String username = request.getParameter("username");
-            String password = request.getParameter("password");
+            String username = request.getParameter("truser");
+            String password = request.getParameter("trpass");
             
             HttpSession session = request.getSession(true);
             
@@ -53,7 +53,7 @@ public class login extends HttpServlet {
                 String DBpassword = ""; // for MySQL.
 
                 String driver = "com.mysql.jdbc.Driver";
-                String url = "jdbc:mysql://localhost:3306/northwind";
+                String url = "jdbc:mysql://localhost:3306/training_management";
                 Class.forName(driver);
                 // Establish network connection to database.
                 Connection connection =
@@ -62,8 +62,8 @@ public class login extends HttpServlet {
                 // Send query to database and store results.
                 Statement statement = connection.createStatement();
 
-                String query = "SELECT * FROM user WHERE ";
-                query = query + "userID='" + username + "' AND ";
+                String query = "SELECT * FROM admin_info WHERE ";
+                query = query + "username='" + username + "' AND ";
                 query = query + "password='" + password + "'";
                 
                 System.out.println(query);
