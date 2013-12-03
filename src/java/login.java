@@ -45,6 +45,7 @@ public class login extends HttpServlet {
             String username = request.getParameter("truser");
             String password = request.getParameter("trpass");
             
+            
             HttpSession session = request.getSession(true);
             
             try{
@@ -139,4 +140,12 @@ public class login extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+    
+    private int getValue(String valString, int defaultVal) {
+    try {
+      return(Integer.parseInt(valString));
+    } catch(NumberFormatException nfe) {
+      return(defaultVal);
+    }
+  }
 }
