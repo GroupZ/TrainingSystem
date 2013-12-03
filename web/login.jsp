@@ -23,8 +23,9 @@
 <tr><td align="right">Password:</td><td>
 <input type="password" name="trpass" size="30" /></td></tr>
 
-<tr><td align="center" colspan="2"><br><input type="submit" name="btnLogin" value="Log in"  /></td></tr>
 <tr><td colspan="2"><label><input type="checkbox" name="remember" value="1" />Remember me</label></td></tr>
+
+<tr><td align="center" colspan="2"><br><input type="submit" name="btnLogin" value="Log in"  /></td></tr>
 </table>
 </form>
 <br>
