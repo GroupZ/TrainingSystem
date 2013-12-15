@@ -1,3 +1,4 @@
+/*
 /* Created by Artisteer v4.1.0.59861 */
 /*jshint forin:true, noarg:true, noempty:true, eqeqeq:true, bitwise:true, strict:true, undef:true, curly:false, browser:true, jquery:false */
 /*global jQuery BackgroundHelper */
@@ -279,8 +280,9 @@ var navigatorResizeHandler = (function ($) {
         });
     };
 })(jQuery);
+
 jQuery(window).bind("resize", (function ($) {
-    /*global responsiveDesign */
+
     "use strict";
     return function () {
         if (typeof responsiveDesign !== "undefined" && responsiveDesign.isResponsive)

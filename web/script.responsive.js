@@ -2,6 +2,7 @@
 /*jshint forin:true, noarg:true, noempty:true, eqeqeq:true, bitwise:true, strict:true, undef:true, curly:false, browser:true, jquery:false */
 /*global jQuery */
 
+/*
 var responsiveDesign = {
     isResponsive: false,
     isDesktop: false,
@@ -353,7 +354,7 @@ jQuery(function($) {
     });
 });
 
-/*global jQuery, responsiveDesign*/
+
 
 
 var responsiveLayoutCell = (function ($) {
@@ -417,3 +418,4 @@ jQuery(window).bind("responsive", function (event, responsiveDesign) {
 if (!jQuery.browser.msie || jQuery.browser.version > 8) {
     jQuery(responsiveDesign.initialize);
 }
+*/

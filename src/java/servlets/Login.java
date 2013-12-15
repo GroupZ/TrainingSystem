@@ -1,3 +1,5 @@
+package servlets;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -7,13 +9,14 @@ import javax.servlet.http.HttpServletResponse;
 import java.sql.*;
 import java.io.*;
 import java.lang.*;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author MuhammadHasyimi
  */
-public class login extends HttpServlet {
+public class Login extends HttpServlet {
 
     /**
      * Processes requests for both HTTP
@@ -44,12 +47,25 @@ public class login extends HttpServlet {
             //read FORM data
             String username = request.getParameter("truser");
             String password = request.getParameter("trpass");
+            int remember = getValue(request.getParameter("remember"), 0);
             
-            
-            HttpSession session = request.getSession(true);
-            
-            try{
-                // APPRAOCH 2 : Accessing MySQL DATABASE 
+            try {
+                ConnectDB c_db = new ConnectDB();
+                Connection conn=c_db.getConnection();
+                String query = null;
+                //String query2 = null;
+                Statement stmt;
+                ResultSet resultSet;
+                ResultSetMetaData resultSetMetaData;
+
+                query = "SELECT * FROM users WHERE ";
+                query = query + "username='" + username + "' AND ";
+                query = query + "password='" + password + "'";
+                
+                stmt = conn.prepareStatement(query);
+                resultSet = stmt.executeQuery(query);
+                resultSetMetaData = resultSet.getMetaData();
+                /* APPRAOCH 2 : Accessing MySQL DATABASE 
                 String DBusername = "root"; // Username/password required
                 String DBpassword = ""; // for MySQL.
 
@@ -59,37 +75,50 @@ public class login extends HttpServlet {
                 // Establish network connection to database.
                 Connection connection =
                     DriverManager.getConnection(url, DBusername, DBpassword);
-                
+                */
                 // Send query to database and store results.
-                Statement statement = connection.createStatement();
-
-                String query = "SELECT * FROM admin_info WHERE ";
-                query = query + "username='" + username + "' AND ";
-                query = query + "password='" + password + "'";
+                //Statement statement = conn.createStatement();
                 
-                System.out.println(query);
-                
-                ResultSet resultSet = statement.executeQuery(query);
+                //ResultSet resultSet = statement.executeQuery(query);
                 
                 if (resultSet.next())
                 {
                     out.println("Login Success!");
-                    out.println("User ID :" + resultSet.getString("employeeID"));
-                    out.println("Username :" + resultSet.getString(3));
+                    //out.println("User ID :" + resultSet.getString("employeeID"));
+                    //out.println("Username :" + resultSet.getString(3));
                     
-                    session.setAttribute("username", username);
-                    session.setAttribute("username2", "BSBEV");
-                    response.sendRedirect("index.jsp");
+                    if(remember == 1) {
+                        Cookie c = new Cookie("name", resultSet.getString("name"));
+                        c.setMaxAge(24*60*60);
+                        response.addCookie(c);
+                        
+                        Cookie d = new Cookie("designation", resultSet.getString("designation"));
+                        d.setMaxAge(24*60*60);
+                        response.addCookie(d);
+                        
+                        Cookie e = new Cookie("username", resultSet.getString("username"));
+                        e.setMaxAge(24*60*60);
+                        response.addCookie(e);
+                    } else {
+                        HttpSession session = request.getSession(true);
+                        session.setAttribute("name", resultSet.getString("name"));
+                        session.setAttribute("designation", resultSet.getString("designation"));
+                        session.setAttribute("username", resultSet.getString("username"));
+                        //session.setAttribute("username2", "BSBEV");
+                    }
+                    response.sendRedirect("./testLogin.jsp");
                 }
                 else
                 {
                      out.println("Login Failed! Your entered wrong username/password");
+                     //response.sendRedirect("./form/login.jsp");
                 }
       // Print results.
             }
-            catch(ClassNotFoundException cnfe) {
-            System.err.println("Error loading driver: " + cnfe);
-            } catch(SQLException sqle) {
+            //catch(ClassNotFoundException cnfe) {
+           // System.err.println("Error loading driver: " + cnfe);
+            //} 
+            catch(SQLException sqle) {
             System.err.println("Error connecting: " + sqle);
             } catch(Exception ex) {
             System.err.println("Error with input: " + ex);
@@ -141,11 +170,14 @@ public class login extends HttpServlet {
         return "Short description";
     }// </editor-fold>
     
-    private int getValue(String valString, int defaultVal) {
+    public int getValue(String valString, int defaultVal) {
     try {
       return(Integer.parseInt(valString));
     } catch(NumberFormatException nfe) {
       return(defaultVal);
+    }
+    catch(Exception e) {
+        return(defaultVal);
     }
   }
 }

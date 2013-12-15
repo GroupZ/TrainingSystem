@@ -14,7 +14,7 @@
     <body>
         <h4 align="center">Log in</h4>
 
-<form name="trLoginForm" action="./login" method="post" enctype="application/x-www-form-urlencoded">
+<form name="trLoginForm" action="./Login" method="post" enctype="application/x-www-form-urlencoded">
 <table border=0 align="center">
 
 <tr><td align="right">Username:</td><td>
@@ -29,13 +29,5 @@
 </table>
 </form>
 <br>
-<p align="center">
-[<a href="register.jsp">Sign up</a>]
-Register now if you want to use this system.
-</p>
-
-<p align="center">
-[<a href="#" onClick="window.prompt('Enter your email address',''); window.alert('Your password has been sent to your email address.');">Forgot password</a>]
-</p><br>
     </body>
 </html>
