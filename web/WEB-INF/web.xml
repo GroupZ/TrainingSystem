@@ -20,6 +20,10 @@
         <servlet-name>CourseDelete</servlet-name>
         <servlet-class>servlets.CourseDelete</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UserReg</servlet-name>
+        <servlet-class>servlets.UserReg</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/Login</url-pattern>
@@ -39,6 +43,10 @@
     <servlet-mapping>
         <servlet-name>CourseDelete</servlet-name>
         <url-pattern>/CourseDelete</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UserReg</servlet-name>
+        <url-pattern>/UserReg</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

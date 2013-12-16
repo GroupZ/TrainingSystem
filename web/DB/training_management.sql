@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 04, 2013 at 10:47 AM
+-- Generation Time: Dec 17, 2013 at 04:44 AM
 -- Server version: 5.5.27
 -- PHP Version: 5.4.7
 
@@ -49,6 +49,36 @@ CREATE TABLE IF NOT EXISTS `ads_info` (
   `offer_letter_place` varchar(50) NOT NULL,
   PRIMARY KEY (`offer_letter_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `courses`
+--
+
+CREATE TABLE IF NOT EXISTS `courses` (
+  `id` int(5) NOT NULL AUTO_INCREMENT,
+  `course_code` varchar(50) NOT NULL,
+  `course_name` varchar(100) NOT NULL,
+  `category` varchar(50) DEFAULT NULL,
+  `start_date` date DEFAULT NULL,
+  `end_date` date DEFAULT NULL,
+  `venue` varchar(100) NOT NULL,
+  `objective` varchar(200) DEFAULT NULL,
+  `target` varchar(50) DEFAULT NULL,
+  `trainer_name` varchar(100) DEFAULT NULL,
+  `trainer_email` varchar(50) DEFAULT NULL,
+  `trainer_phone` varchar(12) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `courses`
+--
+
+INSERT INTO `courses` (`id`, `course_code`, `course_name`, `category`, `start_date`, `end_date`, `venue`, `objective`, `target`, `trainer_name`, `trainer_email`, `trainer_phone`) VALUES
+(1, 'T123', 'Test Entry', 'Academic', '2013-11-12', '2013-12-15', 'Hall', 'sdsdsads', 'Old people', 'Mr. XYZ', 'test@mail.com', '012123456789'),
+(2, 'A123', 'Test Entry 2sss', 'ICT Training', '2012-02-14', '2013-01-14', 'Hall 2', 'sdsd\r\nsds\r\nds\r\nd\r\nsd', 'Old people 2', 'Mr. XYZe', 'e@mai.coss', '012123456789');
 
 -- --------------------------------------------------------
 
@@ -207,6 +237,32 @@ CREATE TABLE IF NOT EXISTS `staff_info` (
   PRIMARY KEY (`staff _id`),
   UNIQUE KEY `no_ic` (`no_ic`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(100) NOT NULL,
+  `password` varchar(100) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `designation` varchar(100) NOT NULL DEFAULT 'staff',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `username`, `password`, `name`, `designation`) VALUES
+(1, 'admin', 'admin', 'Default Admin', 'admin'),
+(2, 'staff', 'staff', 'Default Staff', 'staff'),
+(3, '12345', '12345', 'Default Admin', 'admin'),
+(4, '123', '123', 'Default Staff', 'staff'),
+(5, 'ali', '12345', 'ALi', 'staff');
 
 -- --------------------------------------------------------
 

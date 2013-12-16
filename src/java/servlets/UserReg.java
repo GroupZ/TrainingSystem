@@ -7,16 +7,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.*;
-import java.io.*;
-import java.lang.*;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author MuhammadHasyimi
  */
-public class Login extends HttpServlet {
+public class UserReg extends HttpServlet {
 
     /**
      * Processes requests for both HTTP
@@ -42,77 +38,32 @@ public class Login extends HttpServlet {
             out.println("<title>Please wait...</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Processing..</h1>");
+            out.println("<h1>Processing registration..</h1>");
 
             //read FORM data
-            String username = request.getParameter("truser");
-            String password = request.getParameter("trpass");
-            int remember = getValue(request.getParameter("remember"), 0);
+            String name = request.getParameter("name");
+            String user = request.getParameter("user");
+            String pass = request.getParameter("pass");
+            String designation = "staff";
             
             try {
                 ConnectDB c_db = new ConnectDB();
                 Connection conn=c_db.getConnection();
                 String query = null;
-                //String query2 = null;
-                Statement stmt;
-                ResultSet resultSet;
-                ResultSetMetaData resultSetMetaData;
 
-                query = "SELECT * FROM users WHERE ";
-                query = query + "username='" + username + "' AND ";
-                query = query + "password='" + password + "'";
+                Statement stmt = conn.createStatement();
+
+                query = "INSERT INTO users (username, password, "
+                        + "name, designation) VALUES ";
+                query = query + "('" + user + "', '" + pass + "', '"
+                        + name + "', '" + designation + "')";
                 
                 stmt = conn.prepareStatement(query);
-                resultSet = stmt.executeQuery(query);
-                resultSetMetaData = resultSet.getMetaData();
-                /* APPRAOCH 2 : Accessing MySQL DATABASE 
-                String DBusername = "root"; // Username/password required
-                String DBpassword = ""; // for MySQL.
-
-                String driver = "com.mysql.jdbc.Driver";
-                String url = "jdbc:mysql://localhost:3306/training_management";
-                Class.forName(driver);
-                // Establish network connection to database.
-                Connection connection =
-                    DriverManager.getConnection(url, DBusername, DBpassword);
-                */
-                // Send query to database and store results.
-                //Statement statement = conn.createStatement();
+                stmt.execute(query);
                 
-                //ResultSet resultSet = statement.executeQuery(query);
+                    out.println("Success!");
+                    response.sendRedirect("./login.jsp?note=2");
                 
-                if (resultSet.next())
-                {
-                    out.println("Login Success!");
-                    //out.println("User ID :" + resultSet.getString("employeeID"));
-                    //out.println("Username :" + resultSet.getString(3));
-                    
-                    if(remember == 1) {
-                        Cookie c = new Cookie("name", resultSet.getString("name"));
-                        c.setMaxAge(24*60*60);
-                        response.addCookie(c);
-                        
-                        Cookie d = new Cookie("designation", resultSet.getString("designation"));
-                        d.setMaxAge(24*60*60);
-                        response.addCookie(d);
-                        
-                        Cookie e = new Cookie("username", resultSet.getString("username"));
-                        e.setMaxAge(24*60*60);
-                        response.addCookie(e);
-                    } else {
-                        HttpSession session = request.getSession(true);
-                        session.setAttribute("name", resultSet.getString("name"));
-                        session.setAttribute("designation", resultSet.getString("designation"));
-                        session.setAttribute("username", resultSet.getString("username"));
-                        //session.setAttribute("username2", "BSBEV");
-                    }
-                    response.sendRedirect("./testLogin.jsp");
-                }
-                else
-                {
-                     out.println("Login Failed! Your entered wrong username/password");
-                     response.sendRedirect("./login.jsp?note=1");
-                }
       // Print results.
             }
             //catch(ClassNotFoundException cnfe) {
