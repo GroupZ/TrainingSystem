@@ -51,7 +51,7 @@ if(isSet == false) {
 if((request.getParameter("note")).equals("1")) { %>
 	<p align="center" style="color:#F00; font-size:16px"> Login Failed! Invalid username/password</p>
 <% } else if((request.getParameter("note")).equals("2")) { %>
-<p align="center" style="color:#0C0; font-size:16px">Registration success! You may log in now.</p>
+<p align="center" style="color:#0C0; font-size:16px">Registration success! You may log in now.<br>Please complete your personal information in Profile page.</p>
 <% } else if((request.getParameter("note")).equals("3")) { %>
 <p align="center" style="color:#00F; font-size:16px">Successfully logged out</p>
 <% } } %>

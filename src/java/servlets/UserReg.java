@@ -38,7 +38,7 @@ public class UserReg extends HttpServlet {
             out.println("<title>Please wait...</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Processing registration..</h1>");
+            out.println("<h1>System found error</h1>");
 
             //read FORM data
             String name = request.getParameter("name");
@@ -49,7 +49,7 @@ public class UserReg extends HttpServlet {
             try {
                 ConnectDB c_db = new ConnectDB();
                 Connection conn=c_db.getConnection();
-                String query = null;
+                String query, query2;
 
                 Statement stmt = conn.createStatement();
 
@@ -61,6 +61,12 @@ public class UserReg extends HttpServlet {
                 stmt = conn.prepareStatement(query);
                 stmt.execute(query);
                 
+                query2 = "INSERT INTO staff_info (name, username) VALUES ";
+                query2 = query2 + "('" + name + "', '" + user + "')";
+                
+                
+                stmt = conn.prepareStatement(query2);
+                stmt.execute(query2);
                     out.println("Success!");
                     response.sendRedirect("./login.jsp?note=2");
                 
